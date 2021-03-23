@@ -8,17 +8,6 @@ update @ 2021/03/23
 
 with ADC#2 apporach to ADC#1 by PID solution
 
-ADC#1 --> MCU -----> PWM 
-
-			^	   	  |
-			
-			|	      |
-			
-			|	      v
-			
-		  ADC#2 <-- RC circuit
-
-
 2. initial PB.5 (PWM0_CH0) , with external RC circuit , to convert DC voltage
 
 3. initial PB.0 (ADC0_CH0) as TARGET voltage , PB.4 (ADC0_CH4) as APPROACH voltage , trigger with PWM
