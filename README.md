@@ -6,6 +6,15 @@ update @ 2021/03/23
 
 1. simple PID exercise , with ADC#1 input , and adjust PWM output duty , covert to DC voltage and detect by ADC#2 , 
 
+
+
+ADC#1 --> MCU -----> PWM 
+			^	   	  |
+			|	      |
+			|	      v
+		  ADC#2 <-- RC circuit
+
+
 with ADC#2 apporach to ADC#1 by PID solution
 
 2. initial PB.5 (PWM0_CH0) , with external RC circuit , to convert DC voltage
