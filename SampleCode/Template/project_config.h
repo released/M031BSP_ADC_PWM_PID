@@ -10,7 +10,7 @@ typedef enum{
 	flag_start = 0 ,
 
 	flag_ADC_Data_Ready ,
-
+	
 	flag_error ,		
 	flag_DEFAULT	
 }Flag_Index;

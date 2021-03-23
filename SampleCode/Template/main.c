@@ -59,10 +59,7 @@ volatile uint32_t counter_tick = 0;
 #define ADCextendSampling 					(0)
 
 uint32_t AVdd = 0;
-uint16_t aADCxCH = 0;
-uint16_t aADCxConvertedData = 0;
-//uint16_t adc_value1 = 0;
-//uint16_t adc_value2 = 0;
+uint8_t ADC_CH = 0;
 volatile uint16_t u16adc_data[2] = {0};
 volatile uint16_t u16adc_OldFilterValue[2] = {0};
 
@@ -330,20 +327,16 @@ void ADC_IRQHandler(void)
 	
 	set_flag(flag_ADC_Data_Ready , ENABLE);
 
-	aADCxConvertedData = ADC_GET_CONVERSION_DATA(ADC, aADCxCH);
-
-	if (aADCxCH == ADC0_CH0)
+	if (ADC_CH == ADC0_CH0)
 	{
-//		adc_value1 = aADCxConvertedData ;
-		u16adc_data[ADC_TARGET] = aADCxConvertedData;
+		u16adc_data[ADC_TARGET] = ADC_GET_CONVERSION_DATA(ADC, ADC0_CH0);
 		value = LowPassFilter(u16adc_OldFilterValue[ADC_TARGET],u16adc_data[ADC_TARGET]);
 		u16adc_OldFilterValue[ADC_TARGET] = value;
 		u16adc_data[ADC_TARGET] = value;		
 	}
-	if (aADCxCH == ADC0_CH4)
+	if (ADC_CH == ADC0_CH4)
 	{
-//		adc_value2 = aADCxConvertedData ;
-		u16adc_data[ADC_APPROACH] = aADCxConvertedData;
+		u16adc_data[ADC_APPROACH] = ADC_GET_CONVERSION_DATA(ADC, ADC0_CH4);
 		value = LowPassFilter(u16adc_OldFilterValue[ADC_APPROACH],u16adc_data[ADC_APPROACH]);
 		u16adc_OldFilterValue[ADC_APPROACH] = value;
 		u16adc_data[ADC_APPROACH] = value;
@@ -477,7 +470,7 @@ void PID_Calculation(void)
 		#endif
 
 		
-		if (abs_value < 10 )
+		if (abs_value < 20 )
 		{			
 			break;
 		}
@@ -526,15 +519,14 @@ void TMR1_IRQHandler(void)
 
 			if (flag == 0)
 			{
-				aADCxCH = ADC0_CH0;
+				ADC_CH = ADC0_CH0;
 			}
 			else
 			{
-				aADCxCH = ADC0_CH4;
+				ADC_CH = ADC0_CH4;
 			}
-
 			
-			ADC_InitChannel(aADCxCH);
+			ADC_InitChannel(ADC_CH);
 		}	
     }
 }
